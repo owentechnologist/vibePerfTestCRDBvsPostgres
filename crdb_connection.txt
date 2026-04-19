@@ -1,0 +1,1 @@
+postgresql://dbuser:MFgrE6iNDmLROV2CA8JeZw@starry-pixie-xk4.azure-southcentralus.cockroachlabs.cloud:26257/perftest?sslmode=verify-full&sslrootcert=%2FUsers%2Fowentaylor%2FLibrary%2FCockroachCloud%2Fcerts%2Fa819ed16-926c-4748-83d3-cbb622f82b7a%2Fstarry-pixie-ca.crt

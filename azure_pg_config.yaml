@@ -1,0 +1,92 @@
+# Azure PostgreSQL Flexible Server Configuration for Performance Benchmark
+# This file defines the server specs for automated deployment via Azure CLI
+
+azure_postgresql:
+  # Resource group and location
+  resource_group: "perftest-rg-2026q2"
+  location: "southcentralus"
+
+  # Server identification
+  server_name: "perftest-pg-2026q2"
+
+  # PostgreSQL version
+  version: 16
+
+  # SKU and tier configuration
+  sku:
+    name: "Standard_D8s_v3"      # 8 vCPUs, 32 GB RAM
+    tier: "GeneralPurpose"        # Options: Burstable, GeneralPurpose, MemoryOptimized
+
+  # Storage configuration
+  storage:
+    size_gb: 128                  # Storage size in GB (minimum 32 GB)
+    auto_grow: "Enabled"          # Options: Enabled, Disabled
+    iops: 500                     # IOPS (leave null for auto-calculated based on storage)
+
+  # High Availability configuration
+  high_availability:
+    mode: "ZoneRedundant"         # Options: ZoneRedundant, SameZone, Disabled
+    zone: 1                       # Primary zone (1, 2, or 3)
+    standby_zone: 2               # Standby zone for ZoneRedundant HA
+
+  # Backup configuration
+  backup:
+    retention_days: 7             # Backup retention period (7-35 days)
+    geo_redundant: "Disabled"     # Options: Enabled, Disabled
+
+  # Network configuration
+  network:
+    public_access: "0.0.0.0"      # Allow all IPs (0.0.0.0) or specific CIDR
+    # For private endpoint, set public_access to null and configure:
+    # vnet_name: "perftest-vnet"
+    # subnet_name: "perftest-subnet"
+    # delegation: true
+
+  # Database configuration
+  database:
+    name: "perftest"
+    charset: "UTF8"
+    collation: "en_US.utf8"
+
+  # Admin user configuration
+  admin:
+    username: "pgadmin"
+    # Password will be auto-generated during deployment
+    # You can override by setting AZURE_PG_PASSWORD environment variable
+
+  # PostgreSQL server parameters (optional tuning)
+  parameters:
+    max_connections: 200
+    shared_buffers_mb: 8192       # 8 GB (25% of 32 GB RAM)
+    effective_cache_size_mb: 24576  # 24 GB (75% of 32 GB RAM)
+    maintenance_work_mem_mb: 2048 # 2 GB
+    checkpoint_completion_target: 0.9
+    wal_buffers_mb: 16
+    default_statistics_target: 100
+    random_page_cost: 1.1         # SSD optimized
+    effective_io_concurrency: 200
+    work_mem_kb: 10485            # ~10 MB per connection
+    min_wal_size_mb: 1024
+    max_wal_size_mb: 4096
+
+  # Deployment options
+  options:
+    delete_protection: false      # Allow server deletion without confirmation
+    enable_auto_scaling: false    # Keep fixed resources for consistent benchmarking
+    maintenance_window:
+      day_of_week: 0              # Sunday
+      start_hour: 2               # 2 AM
+      start_minute: 0
+
+  # Cost estimation (approximate for Standard_D8s_v3 with zone-redundant HA)
+  # Pricing is subject to change - check Azure pricing calculator
+  # Standard_D8s_v3 GP + Zone Redundant HA + 128GB storage: ~$1.00-1.40 per hour
+  # Use --auto-cleanup flag to minimize costs for ephemeral benchmarks
+
+# Notes:
+# - Configuration: PostgreSQL 16 Flexible Server on Azure
+# - Compute: Standard_D8s_v3 (8 vCPUs, 32 GB RAM)
+# - Storage: 128 GB with auto-grow enabled
+# - High Availability: Zone-redundant (primary in zone 1, standby in zone 2)
+# - Region: westus2 (should match CockroachDB region for fair comparison)
+# - Public access enabled for benchmarking (restrict for production)

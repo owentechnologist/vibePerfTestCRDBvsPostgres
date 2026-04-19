@@ -1,0 +1,56 @@
+# CockroachDB Cluster Configuration for Performance Benchmark
+# This file defines the cluster specs for automated deployment via ccloud CLI
+
+cockroachdb:
+  # Cluster identification
+  cluster_name: "perftest-crdb-2026q2"
+
+  # Cloud provider and plan
+  cloud_provider: "azure"  # Options: azure, gcp, aws
+  plan: "advanced"         # Options: advanced, standard, basic
+
+  # Node configuration
+  nodes:
+    # STANDARD plan (provisioned capacity for entire cluster):
+    provisioned_vcpus: 24           # Total vCPUs for cluster (e.g., 3 nodes × 8 vCPUs = 24)
+    storage_gib_limit: 1500         # Total storage limit in GiB (e.g., 3 nodes × 500 GiB = 1500)
+
+    # ADVANCED plan (per-node configuration):
+    vcpus: 8                        # vCPUs per node
+    storage_gib: 500                # Storage per node in GiB
+    nodes_per_region: 3             # 3 nodes in single region (may not work via CLI on Azure)
+
+  # Region configuration
+  # Single region with 3 nodes (desired configuration)
+  regions:
+    - "southcentralus"
+
+  # Network configuration (optional)
+  network:
+    cidr_block: "10.0.0.0/16"  # VPC CIDR block
+
+  # Database configuration
+  database:
+    name: "perftest"
+    sql_user: "perftest_user"
+    # Password will be auto-generated during deployment
+    # You can override by setting CRDB_PASSWORD environment variable
+
+  # Cluster options
+  options:
+    version: "latest"           # CockroachDB version (or specific like "v24.1.0")
+    enable_backup: false        # Disable automated backups for cost savings during benchmark
+    enable_insights: true       # Enable performance insights
+    delete_protection: false    # Allow cluster deletion without confirmation
+
+  # Cost estimation (approximate for 3-node cluster with 24 total vCPUs)
+  # Pricing is subject to change - check CockroachDB Cloud pricing
+  # ADVANCED plan on Azure: ~$2.50-3.50 per hour
+  # Use --auto-cleanup flag to minimize costs for ephemeral benchmarks
+
+# Notes:
+# - DESIRED: ADVANCED plan on Azure, single region (westus2) with 3 nodes
+# - Configured with 8 vCPUs per node × 3 nodes = 24 vCPUs total
+# - Storage: 500 GiB per node × 3 nodes = 1500 GiB total
+# - WARNING: ccloud CLI may not support this configuration on Azure
+#   If deployment fails, use the CockroachDB Cloud Web UI instead

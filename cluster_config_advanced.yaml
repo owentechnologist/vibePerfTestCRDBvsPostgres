@@ -1,0 +1,50 @@
+# CockroachDB Advanced (Multi-Region) Cluster Configuration
+# This file defines ADVANCED plan specs for multi-region deployment
+
+cockroachdb:
+  # Cluster identification
+  cluster_name: "perftest-crdb-advanced-2026q2"
+
+  # Cloud provider and plan
+  cloud_provider: "azure"  # Options: azure, gcp, aws
+  plan: "advanced"         # ADVANCED plan required for multi-region on Azure
+
+  # Node configuration
+  nodes:
+    # ADVANCED plan (per-node configuration):
+    vcpus: 8                        # vCPUs per node
+    storage_gib: 500                # Storage per node in GiB
+
+  # Region configuration
+  # ADVANCED plan on Azure: Multi-region required (>1 node per region constraint)
+  # 3 regions = 3 nodes (1 node per region)
+  regions:
+    - "eastus"
+    - "eastus2"
+    - "centralus"
+
+  # Database configuration
+  database:
+    name: "perftest"
+    sql_user: "perftest_user"
+    # Password will be auto-generated during deployment
+    # You can override by setting CRDB_PASSWORD environment variable
+
+  # Cluster options
+  options:
+    version: "latest"           # CockroachDB version (or specific like "v24.1.0")
+    enable_backup: false        # Disable automated backups for cost savings during benchmark
+    enable_insights: true       # Enable performance insights
+    delete_protection: false    # Allow cluster deletion without confirmation
+
+  # Cost estimation (approximate for 3-node multi-region cluster)
+  # Pricing is subject to change - check CockroachDB Cloud pricing
+  # ADVANCED plan: ~$2.50-3.50 per hour (multi-region, 8 vCPUs × 3 nodes)
+  # Use --auto-cleanup flag to minimize costs for ephemeral benchmarks
+
+# Notes:
+# - ADVANCED plan: 3 regions = 3 nodes (1 node per region)
+# - Azure ADVANCED requires multi-region (>1 node per region constraint)
+# - Total: 8 vCPU × 3 nodes = 24 vCPUs
+# - Storage: 500 GiB per node × 3 nodes = 1500 GiB total
+# - Enterprise features: CMEK, PCI/HIPAA compliance, advanced monitoring

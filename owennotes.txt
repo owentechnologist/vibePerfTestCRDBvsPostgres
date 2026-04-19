@@ -1,0 +1,7 @@
+
+gather the possible ip addresses for the machine you are on: curl -s ifconfig.me/forwarded add them to the allow list
+create a user 'dbuser' and password for that user MFgrE6iNDmLROV2CA8JeZw using the web ui
+Also edit the firewall rules for the postgresDB in Azure after it is created using the deploy_azure_pg.py python script 
+
+edit cluster_config and ensure advanced cluster is specified with a single region (this forces the deployment app to grab the certs and setup the crdb connectivity)
+run python3 get_crdb_connection.py (this lists the available clusters and helps the user establish the connection to be used by the benchmark.py) 

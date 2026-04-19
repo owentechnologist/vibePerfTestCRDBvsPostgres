@@ -1,0 +1,1 @@
+postgresql://pgadmin:!kg4hdAy%ZA7*YrX@perftest-pg-2026q2.postgres.database.azure.com:5432/perftest?sslmode=require
