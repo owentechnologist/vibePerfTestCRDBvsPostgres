@@ -648,17 +648,17 @@ pg_dump -h worker2 -U citus -Fc perftest > worker2.dump
 
 ---
 
-## Cost Considerations
+## Cost Considerations (see pricing on image at top of this doc)
 
 ### CockroachDB Advanced (Azure)
 
 **Typical Configuration**:
 - 3 nodes
-- Standard_D8s_v3 (8 vCPU, 32 GB RAM) per node
+- Standard_D8s_v3 (4 vCPU, 32 GB RAM) per node
 - 500 GB storage per node
 - Single region (eastus)
 
-**Estimated Cost**: ~$3-5/hour = **$2,200-3,600/month**
+**Estimated Cost**: ~$2-3/hour = **$1,600/month**
 
 **Characteristics**:
 - ✅ All nodes equal (no coordinator overhead)
