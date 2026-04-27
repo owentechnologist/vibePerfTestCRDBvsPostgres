@@ -1,5 +1,8 @@
 # CockroachDB to PostgreSQL Elastic Cluster (Citus) Migration Guide
 
+
+![Benchmark Summary 3 Databases CRDB, PostgreSQL, Flexible Server](./benchmarkresults3.png)
+
 ## Executive Summary
 
 This guide documents critical differences between **CockroachDB** and **Azure Database for PostgreSQL - Elastic Cluster (Citus)** for engineers evaluating migration paths. Both are distributed SQL databases, but they have fundamentally different architectures and tradeoffs.
