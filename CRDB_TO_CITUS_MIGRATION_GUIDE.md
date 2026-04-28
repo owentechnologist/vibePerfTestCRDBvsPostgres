@@ -1,5 +1,11 @@
 # CockroachDB to PostgreSQL Elastic Cluster (Citus) Migration Guide
 
+NB: the following image shows test results from 3 competing postgreSQL products:
+All tests were performed from the same laptop running in Austin, TX against the target databases running in Azure (southcentralus)  
+1. Azure Flexible Server for PostgreSQL (1 coordinator, and 3 workers ea with 4 vcpus)
+2. CockroachDB (3 nodes ea with 4 vcpus) 
+3. Azure PostgreSQL (1 primary and 1 backup ea with 8 vcpus)
+
 
 ![Benchmark Summary 3 Databases CRDB, PostgreSQL, Flexible Server](./benchmarkresults3.png)
 
@@ -656,9 +662,9 @@ pg_dump -h worker2 -U citus -Fc perftest > worker2.dump
 - 3 nodes
 - Standard_D8s_v3 (4 vCPU, 32 GB RAM) per node
 - 500 GB storage per node
-- Single region (eastus)
+- Single region (southcentralus)
 
-**Estimated Cost**: ~$2-3/hour = **$1,600/month**
+**Estimated Cost**: ~$2-3/hour = **$1,600/month** (3 nodes total)
 
 **Characteristics**:
 - ✅ All nodes equal (no coordinator overhead)
@@ -667,20 +673,13 @@ pg_dump -h worker2 -U citus -Fc perftest > worker2.dump
 
 ### Azure PostgreSQL Elastic Cluster (Citus)
 
-**Typical Configuration**:
-- 1 coordinator: Standard_D4s_v3 (4 vCPU, 16 GB RAM)
-- 2 workers: Standard_D4s_v3 each (4 vCPU, 16 GB RAM)
-- 128 GB storage per node
-- Single region (eastus)
-
-**Estimated Cost**: ~$1.50/hour = **$1,100/month** (3 nodes total)
-
-**OR for comparable compute**:
-- 1 coordinator: Standard_D8s_v3
-- 3 workers: Standard_D8s_v3 each
+**For comparable compute**:
+- 1 coordinator: Standard_D4s_v3
+- 3 workers: Standard_D4s_v3 each
 - 256 GB storage per node
+- Single region (southcentralus)
 
-**Estimated Cost**: ~$4/hour = **$2,900/month** (4 nodes total)
+**Estimated Cost**: ~$3 to $4/hour = **$1,900/month** (4 nodes total)
 
 **Characteristics**:
 - ✅ Lower cost for same compute (no replication overhead)
