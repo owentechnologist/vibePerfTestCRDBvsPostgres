@@ -1,4 +1,4 @@
-# CockroachDB to PostgreSQL Elastic Cluster (Citus) Migration Guide
+# CockroachDB to PostgreSQL Elastic Cluster (Citus) Migration/Comparison Guide
 
 NB: the following image shows test results from 3 competing postgreSQL products:
 All tests were performed from the same laptop running in Austin, TX against the target databases running in Azure (southcentralus)  
@@ -11,11 +11,11 @@ All tests were performed from the same laptop running in Austin, TX against the 
 
 ## Executive Summary
 
-This guide documents critical differences between **CockroachDB** and **Azure Database for PostgreSQL - Elastic Cluster (Citus)** for engineers evaluating migration paths. Both are distributed SQL databases, but they have fundamentally different architectures and tradeoffs.
+This guide documents critical differences between **CockroachDB** and **Azure Database for PostgreSQL - Elastic Cluster (Citus)** for engineers evaluating these solutions. Both are distributed SQL databases, but they have fundamentally different architectures and tradeoffs.
 
-**Target Audience**: Application developers, database engineers, and technical decision-makers considering migration from CockroachDB to Citus or evaluating both options.
+**Target Audience**: Application developers, database engineers, and technical decision-makers  evaluating both options.
 
-**Key Takeaway**: Citus and CockroachDB are NOT drop-in replacements. Successful migration requires understanding schema design, transaction semantics, and query patterns.
+**Key Takeaway**: Citus and CockroachDB are NOT drop-in replacements. Proper assessment requires understanding schema design, transaction semantics, and query patterns.
 
 ---
 
