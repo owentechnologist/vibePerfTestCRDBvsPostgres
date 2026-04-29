@@ -8,8 +8,16 @@ This project contains performance testing and benchmarking tools for CockroachDB
 
 **IMPORTANT**: When working with CockroachDB-related code, schema design, queries, transactions, or troubleshooting in this project, **always consult** the CockroachDB skills repository located at:
 
+1. either on the local file system
+
 ```
 /Users/owentaylor/wip/gitprojects/cockroachdb-skills
+```
+or 
+2. online
+
+```
+https://github.com/cockroachlabs/cockroachdb-skills
 ```
 
 ### Key Skill Areas

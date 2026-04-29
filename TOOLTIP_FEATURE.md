@@ -1,4 +1,4 @@
-# HTML Dashboard Tooltip Feature
+# HTML Dashboard Tooltip Feature (DOESN'T WORK VERY WELL ACTUALLY)
 
 ## Overview
 
